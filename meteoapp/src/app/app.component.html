@@ -15,13 +15,14 @@
 
       <ng-template #center>
         <p-iconfield iconPosition="left">
-          <p-inputicon class="pi pi-search text-white!" />
-          <input
-            [(ngModel)]="Country"
-            type="text"
-            pInputText
-            placeholder="Search By contry name"
-            class="!w-[300px] !text-sm bg-transparent! text-white! placeholder:text-white!"
+          <p-inputicon class="pi pi-search" />
+          <!-- autoComplete -->
+          <p-autocomplete
+            [(ngModel)]="selectedCountry"
+            [suggestions]="filteredCountries"
+            (completeMethod)="filterCountry($event)"
+            class="text-white"
+            showClear="true"
           />
         </p-iconfield>
       </ng-template>
@@ -33,6 +34,6 @@
       </ng-template>
     </p-toolbar>
 
-    <app-weather-card [country]="Country"></app-weather-card>
+    <app-weather-card [SelectedCountry]="selectedCountry"></app-weather-card>
   </div>
 </main>
