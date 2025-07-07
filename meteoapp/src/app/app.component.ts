@@ -4,41 +4,48 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { Toolbar } from 'primeng/toolbar';
 
-import { SharedModule } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { DataViewModule } from 'primeng/dataview';
+import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { WeatherCardComponent } from './components/weather-card/weather-card.component';
 import { WeatherServiceService } from './weather-service.service';
-import countries from '../utils/data';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-
+import {
+  AutoCompleteCompleteEvent,
+  AutoCompleteModule,
+} from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-root',
-  imports: [AutoCompleteModule, ReactiveFormsModule,WeatherCardComponent,DataViewModule,CardModule,FormsModule, DatePipe,ButtonModule, SharedModule, Toolbar ,InputIcon, IconField , InputTextModule],
+  imports: [
+    AutoCompleteModule,
+    WeatherCardComponent,
+    FormsModule,
+    DatePipe,
+    Toolbar,
+    InputIcon,
+    IconField,
+    InputTextModule,
+    CommonModule,
+  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  CurrentDate = new Date()
-  weatherService = inject(WeatherServiceService)
-  selectedCountry:string = "tunis"
-
-  CountryNames : string[] = countries
-
+  CurrentDate = new Date();
+  weatherService = inject(WeatherServiceService);
+  selectedCountry: string = 'tunis';
   filteredCountries: string[] = [] as string[];
 
-
   filterCountry(event: AutoCompleteCompleteEvent) {
-    let filtred:string[]  = []
-    const name = event.query
-    this.weatherService.getCountryName(name)?.subscribe((res)=>{
-      filtred.push(res.results[0].country)
-      this.filteredCountries = filtred
-    })
+    let filtred: string[] = [] as string[];
+    const name = event.query;
+    this.weatherService.getCountriesName(name)?.subscribe((res) => {
+      if (res?.results) {
+        res.results.forEach((loc) => {
+          const text = loc.name + ',' + loc.country;
+          filtred.push(text);
+        });
+        this.filteredCountries = filtred;
+      }
+    });
   }
-
 }

@@ -13,17 +13,21 @@ export class WeatherServiceService {
   private http = inject(HttpClient);
 
 
+  getCountriesName (name:string | null):Observable<Location>| undefined{
+       return this.http.get<Location>(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&language=en&format=json`)
+  }
+
   getCountryName(name:string | null): Observable<Location> | undefined{
-       return this.http.get<Location>(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&count=1&language=en&format=json`)
+       return this.http.get<Location>(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&language=en&format=json`)
   }
 
 
   fetchWeather(name:string | null):Observable<Weather> | undefined{
 
-       return this.http.get<Location>(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&count=1&language=en&format=json`)
+       return this.http.get<Location>(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&language=en&format=json`)
     .pipe(
       switchMap(res =>{
-        if(res.results.length === 0){
+        if(!res?.results){
           return throwError(()=>new Error("No location found"))
         }
         const location = res.results[0]

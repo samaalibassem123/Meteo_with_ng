@@ -4,16 +4,12 @@
     class="absolute w-full h-svh bg-cover bg-center -z-10 drop-shadow-md"
     alt=""
   />
-  <div class="p-2">
+  <div class="p-2 z-30">
     <p-toolbar
       [style]="{ 'border-radius': '3rem', padding: '1rem 1rem 1rem 1.5rem' }"
       class="backdrop-blur-xl bg-transparent! text-black! drop-shadow-md"
     >
       <ng-template #start>
-        <h1 class="text-xl font-bold text-white">Weather App</h1>
-      </ng-template>
-
-      <ng-template #center>
         <p-iconfield iconPosition="left">
           <p-inputicon class="pi pi-search" />
           <!-- autoComplete -->
@@ -21,10 +17,13 @@
             [(ngModel)]="selectedCountry"
             [suggestions]="filteredCountries"
             (completeMethod)="filterCountry($event)"
-            class="text-white"
-            showClear="true"
+            placeholder="Enter Country name"
           />
         </p-iconfield>
+      </ng-template>
+
+      <ng-template #center>
+        <h1 class="text-xl font-bold text-white">Weather App</h1>
       </ng-template>
 
       <ng-template #end>
@@ -33,7 +32,6 @@
         </p>
       </ng-template>
     </p-toolbar>
-
-    <app-weather-card [SelectedCountry]="selectedCountry"></app-weather-card>
   </div>
+  <app-weather-card [SelectedCountry]="selectedCountry"></app-weather-card>
 </main>
