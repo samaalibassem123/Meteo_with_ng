@@ -1,0 +1,25 @@
+@if( weather | async; as w){
+<div class="p-15 flex items-center justify-center">
+  <div class="p-24 text-white drop-shadow-md backdrop-blur-xl w-fit">
+    <div class="space-y-2 text-center">
+      <h1 class="text-5xl capitalize">
+        {{ CountryName.results[0].name }},{{ CountryName.results[0].country }}
+      </h1>
+      <h1 class="text-5xl">
+        {{ w.current.temperature_2m }} {{ w.current_units.temperature_2m }}
+      </h1>
+      <p>{{ w.current.time | date : "hh:mm" : "UTC" }}</p>
+      <p>humidity : {{ w.current.relative_humidity_2m }} %</p>
+      <p>rain : {{ w.current.rain }} {{ w.current_units.rain }}</p>
+      <p>
+        wind-speed : {{ w.current.wind_speed_10m }}
+        {{ w.current_units.wind_speed_10m }}
+      </p>
+      <p>
+        wind-direction : {{ w.current.wind_direction_10m }}
+        {{ w.current_units.wind_direction_10m }}
+      </p>
+    </div>
+  </div>
+</div>
+}
